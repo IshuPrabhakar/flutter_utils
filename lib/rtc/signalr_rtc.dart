@@ -11,7 +11,7 @@ class SignalR {
   static const List<int> _delays = [3000, 7000, 10000, 15000];
 
   /// Loggertype
-  String? _loggerType;
+  LoggerType? _loggerType;
 
   /// HttpOptions
   HttpConnectionOptions? _httpOptions;
@@ -39,13 +39,12 @@ class SignalR {
   /// Initializes a SignalR connection with hub url
   init({
     required String url,
-    String? loggerType,
+    LoggerType? loggerType,
     MessageHeaders? msgheaders,
     HttpTransportType? transportType,
     IHubProtocol? hubProtocol,
     Future<String> Function()? accessTokenFactory,
   }) async {
-
     _serverUrl = url;
 
     _loggerType = loggerType ?? LoggerType.transportProtLogger;
@@ -55,11 +54,11 @@ class SignalR {
     _accessTokenFactory = accessTokenFactory;
 
     _httpOptions = HttpConnectionOptions(
-      logger: Logger(_loggerType!),
+      logger: Logger(_loggerType!.value),
       headers: _defaultHeaders,
       transport: _transportType,
       httpClient: WebSupportingHttpClient(
-        Logger(_loggerType!),
+        Logger(_loggerType!.value),
       ),
       accessTokenFactory: _accessTokenFactory,
     );
@@ -71,7 +70,7 @@ class SignalR {
           options: _httpOptions,
         )
         .withHubProtocol(_hubProtocol!)
-        .configureLogging(Logger(_loggerType!))
+        .configureLogging(Logger(_loggerType!.value))
         .build();
 
     if (_hubConnection.state == HubConnectionState.Disconnected) {
@@ -94,7 +93,7 @@ class SignalR {
       await _hubConnection.invoke(methodName, args: args);
     }
   }
-  
+
   /// Register your methods at startups
   /// If you have selected jsonhubprotocol viz default then decode it as json-string or string only
   recieve({
@@ -110,10 +109,10 @@ class SignalR {
 /// "SignalR - hub"
 /// If youn want to also to log out transport messages:
 /// "SignalR - transport"
-abstract class LoggerType {
-  static const String _hubProtLogger = "SignalR - hub";
-  static get hubProtLogger => _hubProtLogger;
+enum LoggerType {
+  hubProtLogger("SignalR - hub"),
+  transportProtLogger("SignalR - transport");
 
-  static const String _transportProtLogger = "SignalR - transport";
-  static get transportProtLogger => _transportProtLogger;
+  const LoggerType(this.value);
+  final String value;
 }
