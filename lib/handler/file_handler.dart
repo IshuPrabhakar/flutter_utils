@@ -1,6 +1,6 @@
 part of handler;
 
-class ImageHandler {
+class FileHandler {
   /// Image picker
   /// Picks an image from the provided source. Defaults to [ImageSource.gallery]
   /// To select multiple image set `selectMultiple = true`
