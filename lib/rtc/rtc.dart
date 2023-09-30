@@ -1,10 +1,11 @@
 library rtc;
 
-import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:logging/logging.dart';
-import 'package:signalr_netcore/ihub_protocol.dart';
-import 'package:signalr_netcore/json_hub_protocol.dart';
-import 'package:signalr_netcore/signalr_client.dart';
+import 'dart:io';
 
-part 'signalr_rtc.dart';
-part 'web_rtc.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:signalr_core/signalr_core.dart';
+import 'package:http/io_client.dart';
+
+part 'signalr.dart';
+part 'webrtc.dart';

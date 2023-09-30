@@ -8,7 +8,7 @@ part of rtc;
 /// Step 2: Create datachannel/Stream
 /// step 3: Accept answer
 class WebRTC {
-  List<RTCDataChannel> _dataChannels = [];
+  final List<RTCDataChannel> _dataChannels = [];
   get dataChannel => _dataChannels;
 
   late RTCPeerConnection _peerConnection;
@@ -28,8 +28,6 @@ class WebRTC {
   };
 
   late Map<String, dynamic> _constraints;
-
-  WebRTC();
 
   /// Initialises the webrtc
   /// more on https://w3c.github.io/mediacapture-main/getusermedia.html#the-model-sources-sinks-constraints-and-settings
