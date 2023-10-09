@@ -1,4 +1,4 @@
-library error;
+part of essentials;
 
 class Error {
   late String errorCode;
@@ -52,7 +52,7 @@ class Error {
   String toString() {
     return '''
     +-------------------+
-    | ERROR: $errorType |
+     ERROR: $errorType 
     +-------------------+
      errorCode: $errorCode, 
      errorType: $errorType, 
@@ -67,7 +67,7 @@ enum ErrorType {
   networkError("Network Error."),
   unAuthorizedError("UnAuthorized Error."),
   jsonParseError("Json Parse Error."),
-  notInCorrectFormatError("Not in correct format Error."),
+  validationError("Validation Error."),
   serverError("Server error.");
 
   const ErrorType(this.value);

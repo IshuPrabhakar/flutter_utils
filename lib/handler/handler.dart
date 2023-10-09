@@ -11,5 +11,5 @@ import 'package:http/http.dart' as http;
 part 'permission_handler.dart';
 part 'file_handler.dart';
 part 'network_handler.dart';
-part 'api_handler.dart';
+// part 'api_handler.dart';
 part 'result.dart';
