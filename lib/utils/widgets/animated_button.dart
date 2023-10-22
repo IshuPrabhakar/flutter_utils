@@ -9,11 +9,16 @@ class AnimatedButton extends StatefulWidget {
     this.width,
     this.onTap,
     this.child,
-    this.canExpand = false, this.splashColor,
+    this.canExpand = false,
+    this.splashColor,
+    this.borderColor,
+    this.isDisabled = false,
   });
 
   final BorderRadiusType? borderRadiusType;
+  final bool? isDisabled;
   final Color? color;
+  final Color? borderColor;
   final double? height;
   final double? width;
   final VoidCallback? onTap;
@@ -25,7 +30,8 @@ class AnimatedButton extends StatefulWidget {
   State<AnimatedButton> createState() => _AnimatedButtonState();
 }
 
-class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProviderStateMixin {
+class _AnimatedButtonState extends State<AnimatedButton>
+    with SingleTickerProviderStateMixin {
   late double _scale;
   late AnimationController _controller;
 
@@ -46,8 +52,8 @@ class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvid
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   void _tapDown() {
@@ -64,21 +70,23 @@ class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvid
     return InkWell(
       borderRadius: BorderRadius.circular(widget.borderRadiusType!.value),
       splashColor: widget.splashColor,
-      onTap: () {
-        Future.delayed(
-          const Duration(milliseconds: 100),
-          () {
-            widget.onTap?.call();
-            _tapUpCancel();
-          },
-        );
-        _tapDown();
-      },
-      onTapDown: (_) => _tapDown(),
-      onTapCancel: _tapUpCancel,
+      onTap: widget.isDisabled ?? false
+          ? null
+          : () {
+              Future.delayed(
+                const Duration(milliseconds: 100),
+                () {
+                  widget.onTap?.call();
+                  _tapUpCancel();
+                },
+              );
+              _tapDown();
+            },
+      onTapDown: (_) => widget.isDisabled ?? false ? null : _tapDown(),
+      onTapCancel: widget.isDisabled ?? false ? null : _tapUpCancel,
       child: Transform.scale(
         scale: _scale,
-        child: Container(
+        child: AnimatedContainer(
           height: widget.canExpand == true ? null : widget.height ?? 50,
           width: widget.canExpand == true ? null : widget.width ?? 55,
           decoration: BoxDecoration(
@@ -86,7 +94,9 @@ class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvid
               Radius.circular(widget.borderRadiusType!.value),
             ),
             color: widget.color ?? Colors.white,
+            border: Border.all(color: widget.borderColor ?? Colors.transparent),
           ),
+          duration: const Duration(milliseconds: 300),
           child: Center(child: widget.child),
         ),
       ),

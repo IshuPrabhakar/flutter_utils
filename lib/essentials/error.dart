@@ -1,11 +1,11 @@
 part of essentials;
 
 class Error {
-  late String errorCode;
-  late ErrorType errorType;
-  late String? errorSubType;
-  late String errorDescription;
-  late String stackTrace;
+  String errorCode;
+  ErrorType errorType;
+  String? errorSubType;
+  String errorDescription;
+  String stackTrace;
   Error({
     required this.errorCode,
     required this.errorType,
@@ -14,52 +14,35 @@ class Error {
     required this.stackTrace,
   });
 
-  Error copyWith({
-    String? errorCode,
-    ErrorType? errorType,
-    String? errorSubType,
-    String? errorDescription,
-    String? stackTrace,
-  }) {
-    return Error(
-      errorCode: errorCode ?? this.errorCode,
-      errorType: errorType ?? this.errorType,
-      errorSubType: errorSubType ?? this.errorSubType,
-      errorDescription: errorDescription ?? this.errorDescription,
-      stackTrace: stackTrace ?? this.stackTrace,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'errorCode': errorCode,
-      'errorType': errorType,
+      'errorType': errorType.value,
       'errorSubType': errorSubType,
       'errorDescription': errorDescription,
       'stackTrace': stackTrace,
     };
   }
 
-  Error.fromMap(Map<String, dynamic> map) {
-    errorCode = map['errorCode'];
-    errorSubType = map['errorSubType'];
-    errorDescription = map['errorDescription'];
-    stackTrace = map['stackTrace'];
-    errorType = map['errorType'];
+  factory Error.fromMap(Map<String, dynamic> map) {
+    return Error(
+      errorCode: map['errorCode'] as String,
+      errorType: map['errorType'] as ErrorType, // TODO:
+      errorSubType:
+          map['errorSubType'] != null ? map['errorSubType'] as String : null,
+      errorDescription: map['errorDescription'] as String,
+      stackTrace: map['stackTrace'] as String,
+    );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Error.fromJson(String source) =>
+      Error.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return '''
-    +-------------------+
-     ERROR: $errorType 
-    +-------------------+
-     errorCode: $errorCode, 
-     errorType: $errorType, 
-     errorSubType: $errorSubType, 
-     errorDescription: $errorDescription, 
-     stackTrace: $stackTrace
-    ''';
+    return 'Error(errorCode: $errorCode, errorType: $errorType, errorSubType: $errorSubType, errorDescription: $errorDescription, stackTrace: $stackTrace)';
   }
 }
 

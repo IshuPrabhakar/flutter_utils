@@ -11,7 +11,7 @@ class Result<T>{
   T? _value;
   T? get value =>_value;
 
-  Result.failure(this._error) {
+  Result.failure([this._error]) {
     _isSuccess = false;
   }
 
