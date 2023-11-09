@@ -1,4 +1,4 @@
-// part of handler;
+part of handler;
 
 // class ApiHandler {
 //   late Dio _dio;

@@ -2,6 +2,10 @@ part of handler;
 
 class FileHandler {
   /// Image picker
+  ///
+  /// NOTE: You have to handle permission by your own
+  ///
+  ///
   /// Picks an image from the provided source. Defaults to [ImageSource.gallery]
   /// To select multiple image set `selectMultiple = true`
   /// ### Returns
@@ -13,7 +17,6 @@ class FileHandler {
     bool selectMultiple = false,
   }) async {
     // check for permission
-    await PermissionHandler().requestCameraUsage();
 
     final imagepicker = ImagePicker();
     if (selectMultiple) {
@@ -29,6 +32,11 @@ class FileHandler {
   }
 
   /// Picks a video from the provided source
+  ///
+  ///
+  /// NOTE: You have to handle permission by your own
+  ///
+  ///
   Future<XFile?> pickVideo({
     required Duration maxDuration,
     ImageSource source = ImageSource.gallery,
@@ -36,7 +44,6 @@ class FileHandler {
     CameraDevice preferredCameraDevice = CameraDevice.front,
   }) async {
     // check for permission
-    await PermissionHandler().requestCameraUsage();
 
     final imagepicker = ImagePicker();
     var video = await imagepicker.pickVideo(
@@ -48,6 +55,9 @@ class FileHandler {
   }
 
   /// ImageCropper
+  ///
+  /// NOTE: You have to handle permission by your own
+  ///
   ///
   /// ### Android
   /// Add UCropActivity into your AndroidManifest.xml
@@ -123,7 +133,6 @@ class FileHandler {
   /// `
   Future<List<XFile>?> retrieveLostData() async {
     // check for permission
-    await PermissionHandler().requestCameraUsage();
     final imagepicker = ImagePicker();
 
     final LostDataResponse response = await imagepicker.retrieveLostData();

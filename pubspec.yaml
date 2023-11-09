@@ -17,6 +17,7 @@ dependencies:
   logging: ^1.2.0
   permission_handler: ^10.4.3
   connectivity_plus: ^4.0.2
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
