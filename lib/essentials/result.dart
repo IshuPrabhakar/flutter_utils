@@ -1,22 +1,17 @@
-part of essentials;
+part of handler;
 
-class Result<T>{
- late bool _isSuccess;
-  bool get isSuccess => _isSuccess;
-  bool get isFailure => !_isSuccess;
+class Result<T> {
+  late final bool _isSuccess;
+  get isSuccess => _isSuccess;
 
-  Error? _error;
-  Error? get error => _error;
+  final T? _value;
+  T? get value => _value;
 
-  T? _value;
-  T? get value =>_value;
+  Result.failure([T? value])
+      : _value = value,
+        _isSuccess = false;
 
-  Result.failure([this._error]) {
-    _isSuccess = false;
-  }
-
-  Result.success([T? value]) {
-    _value = value;
-    _isSuccess = true;
-  }
+  Result.success([T? value])
+      : _value = value,
+        _isSuccess = true;
 }

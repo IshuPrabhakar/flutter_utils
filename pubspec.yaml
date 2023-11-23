@@ -15,9 +15,8 @@ dependencies:
   image_cropper: ^5.0.0
   image_picker: ^1.0.2
   animations: ^2.0.8
-  logging: ^1.2.0
-  permission_handler: ^10.4.3
   connectivity_plus: ^4.0.2
+  internet_connection_checker: ^1.0.0+1
   http: ^1.1.0
 
 dev_dependencies:

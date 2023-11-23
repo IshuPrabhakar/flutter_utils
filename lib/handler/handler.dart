@@ -12,4 +12,4 @@ import 'package:http/http.dart' as http;
 part 'file_handler.dart';
 part 'network_handler.dart';
 part 'api_handler.dart';
-part 'result.dart';
+part '../essentials/result.dart';
