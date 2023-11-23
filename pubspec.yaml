@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   # dio: ^5.3.3
+  intl: ^0.18.1
   image_cropper: ^5.0.0
   image_picker: ^1.0.2
   animations: ^2.0.8
