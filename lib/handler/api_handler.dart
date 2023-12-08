@@ -14,6 +14,14 @@ class ApiHandler {
     return _headers['cookie'];
   }
 
+  String? getRfTkn() {
+    return _headers['rftkn'];
+  }
+
+  String? getTkn() {
+    return _headers['tkn'];
+  }
+
   void updateSessionHeader(String sessionId) {
     _headers['cookie'] = sessionId;
   }
@@ -108,12 +116,24 @@ class ApiHandler {
     }
   }
 
+  // void _updateCookie(http.Response response) {
+  //   String? rawCookie = response.headers['set-cookie'];
+  //   if (rawCookie != null) {
+  //     int index = rawCookie.indexOf(';');
+  //     _headers['cookie'] =
+  //         (index == -1) ? rawCookie : rawCookie.substring(0, index);
+  //   }
+  // }
+
   void _updateCookie(http.Response response) {
-    String? rawCookie = response.headers['set-cookie'];
-    if (rawCookie != null) {
-      int index = rawCookie.indexOf(';');
-      _headers['cookie'] =
-          (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    String? rftkn = response.headers['rftkn'];
+    String? tkn = response.headers['tkn'];
+    if (rftkn != null && tkn != null) {
+      int index = rftkn.indexOf(';');
+      _headers['rftkn'] = (index == -1) ? rftkn : rftkn.substring(0, index);
+
+      int tknIndex = tkn.indexOf(';');
+      _headers['tkn'] = (tknIndex == -1) ? tkn : tkn.substring(0, index);
     }
   }
 }
