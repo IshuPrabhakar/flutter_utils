@@ -4,6 +4,7 @@ class ApiHandler {
   final Map<String, String> _headers = {
     HttpHeaders.contentTypeHeader: "application/json",
   };
+  Map<String, String> _cookies = {};
 
   void updateAuthorizationHeader(String accessToken,
       {String schema = "Bearer"}) {
@@ -15,11 +16,11 @@ class ApiHandler {
   }
 
   String? getRfTkn() {
-    return _headers['rftkn'];
+    return _cookies['rf'];
   }
 
   String? getTkn() {
-    return _headers['tkn'];
+    return _cookies['tkn'];
   }
 
   void updateSessionHeader(String sessionId) {
@@ -37,7 +38,8 @@ class ApiHandler {
   }) async {
     try {
       var response = await http.get(Uri.parse(url), headers: _headers);
-      _updateCookie(response);
+      _cookies = extractCookies(response.headers.toString());
+
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
@@ -62,8 +64,11 @@ class ApiHandler {
         headers: _headers,
         body: model != null ? jsonEncode(model) : stringifiedJson,
       );
-      _updateCookie(response);
-      debugPrint(response.body);
+      for (var element in response.headers.entries) {
+        debugPrint(element.value);
+      }
+      _cookies = extractCookies(response.headers.toString());
+      debugPrint(_cookies.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
@@ -87,7 +92,7 @@ class ApiHandler {
         headers: _headers,
         body: model != null ? json.encode(model) : null,
       );
-      _updateCookie(response);
+      _cookies = extractCookies(response.headers.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
@@ -105,7 +110,7 @@ class ApiHandler {
   }) async {
     try {
       var response = await http.delete(Uri.parse(url), headers: _headers);
-      _updateCookie(response);
+      _cookies = extractCookies(response.headers.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
@@ -125,15 +130,32 @@ class ApiHandler {
   //   }
   // }
 
-  void _updateCookie(http.Response response) {
-    String? rftkn = response.headers['rftkn'];
-    String? tkn = response.headers['tkn'];
-    if (rftkn != null && tkn != null) {
-      int index = rftkn.indexOf(';');
-      _headers['rftkn'] = (index == -1) ? rftkn : rftkn.substring(0, index);
+  Map<String, String> extractCookies(String header) {
+    Map<String, String> cookies = {};
 
-      int tknIndex = tkn.indexOf(';');
-      _headers['tkn'] = (tknIndex == -1) ? tkn : tkn.substring(0, index);
+    // Split the header string by commas
+    List<String> headerParts = header.split(',');
+
+    // Iterate over the header parts to find cookies
+    for (String part in headerParts) {
+      if (part.contains('set-cookie')) {
+        // Extract the cookie part
+        String cookiePart = part.split(';')[1];
+
+        // Split the cookie part to get individual cookies
+        List<String> cookiePairs = cookiePart.split(',');
+
+        // Iterate over the cookie pairs to extract key-value pairs
+        for (String pair in cookiePairs) {
+          List<String> keyValue = pair.trim().split('=');
+          String key = keyValue[0].trim();
+          String value = keyValue[1].trim();
+          cookies[key] = value;
+          debugPrint(value);
+        }
+      }
     }
+
+    return cookies;
   }
 }
