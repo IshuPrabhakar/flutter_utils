@@ -55,7 +55,6 @@ class ApiHandler {
         body: model != null ? jsonEncode(model) : stringifiedJson,
       );
       _updateCookie(response);
-      debugPrint(response.body);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {

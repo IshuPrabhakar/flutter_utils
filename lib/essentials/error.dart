@@ -5,6 +5,7 @@ class Error {
   ErrorType errorType;
   String? errorSubType;
   String errorDescription;
+  String? errorMessage;
   String stackTrace;
   Error({
     required this.errorCode,
@@ -12,6 +13,7 @@ class Error {
     this.errorSubType,
     required this.errorDescription,
     required this.stackTrace,
+    this.errorMessage,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +22,7 @@ class Error {
       'errorType': errorType.value,
       'errorSubType': errorSubType,
       'errorDescription': errorDescription,
+      'errorMessage': errorMessage,
       'stackTrace': stackTrace,
     };
   }
@@ -27,7 +30,8 @@ class Error {
   factory Error.fromMap(Map<String, dynamic> map) {
     return Error(
       errorCode: map['errorCode'] as String,
-      errorType: map['errorType'] as ErrorType, // TODO:
+      errorType: ErrorType.values.byName(map['errorType']),
+      errorMessage: map['errorMessage'],
       errorSubType:
           map['errorSubType'] != null ? map['errorSubType'] as String : null,
       errorDescription: map['errorDescription'] as String,

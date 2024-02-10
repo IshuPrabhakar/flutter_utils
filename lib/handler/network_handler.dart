@@ -26,4 +26,10 @@ class NetworkHandler {
     }
     return Future.value(false);
   }
+
+    Stream<ConnectivityResult> get connectivityStream async* {
+    final c = Connectivity();
+    yield await c.checkConnectivity();
+    yield* c.onConnectivityChanged;
+  }
 }
