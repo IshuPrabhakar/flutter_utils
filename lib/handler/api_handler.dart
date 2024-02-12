@@ -33,10 +33,13 @@ class ApiHandler {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
-        return Result.failure();
+        var error = onError == null ? null : onError(response);
+        return error != null
+            ? Result.failure(error)
+            : failureFromResponse<T>(response);
       }
     } on SocketException {
-      return Result.failure();
+      return Result.failure(NetworkConnectionError());
     }
   }
 
@@ -58,10 +61,13 @@ class ApiHandler {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
-        return Result.failure();
+        var error = onError == null ? null : onError(response);
+        return error != null
+            ? Result.failure(error)
+            : failureFromResponse<T>(response);
       }
     } on SocketException {
-      return Result.failure();
+      return Result.failure(NetworkConnectionError());
     }
   }
 
@@ -82,10 +88,13 @@ class ApiHandler {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
-        return Result.failure();
+        var error = onError == null ? null : onError(response);
+        return error != null
+            ? Result.failure(error)
+            : failureFromResponse<T>(response);
       }
     } on SocketException {
-      return Result.failure();
+      return Result.failure(NetworkConnectionError());
     }
   }
 
@@ -100,10 +109,10 @@ class ApiHandler {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Result.success(onSuccess!(response));
       } else {
-        return Result.failure();
+        return Result.failure(NetworkConnectionError());
       }
     } on SocketException {
-      return Result.failure();
+      return Result.failure(NetworkConnectionError());
     }
   }
 
@@ -114,5 +123,19 @@ class ApiHandler {
       _headers['cookie'] =
           (index == -1) ? rawCookie : rawCookie.substring(0, index);
     }
+  }
+
+  Result<T> failureFromResponse<T>(http.Response response) {
+    if (response.statusCode == 400) {
+    } else if (response.statusCode == 401) {
+      return Result.failure(UnauthorizedError());
+    } else if (response.statusCode == 403) {
+      return Result.failure(ForbidError());
+    } else if (response.statusCode == 404) {
+      return Result.failure(NotFoundError());
+    } else {
+      return Result.failure(InternalServerError());
+    }
+    return Result.failure(NotFoundError());
   }
 }

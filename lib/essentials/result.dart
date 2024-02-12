@@ -1,17 +1,22 @@
 part of handler;
 
 class Result<T> {
-  late final bool _isSuccess;
-  get isSuccess => _isSuccess;
+  late bool _isSuccess;
+  bool get isSuccess => _isSuccess;
+  bool get isFailure => !_isSuccess;
 
-  final T? _value;
+  Error? _error;
+  Error? get error => _error;
+
+  T? _value;
   T? get value => _value;
 
-  Result.failure([T? value])
-      : _value = value,
-        _isSuccess = false;
+  Result.failure(this._error) {
+    _isSuccess = false;
+  }
 
-  Result.success([T? value])
-      : _value = value,
-        _isSuccess = true;
+  Result.success([T? value]) {
+    _value = value;
+    _isSuccess = true;
+  }
 }

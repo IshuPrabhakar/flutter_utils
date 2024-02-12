@@ -1,25 +1,25 @@
 part of essentials;
 
 class Error {
-  String errorCode;
-  ErrorType errorType;
+  String? errorCode;
+  ErrorType? errorType;
   String? errorSubType;
-  String errorDescription;
+  String? errorDescription;
   String? errorMessage;
-  String stackTrace;
+  String? stackTrace;
   Error({
-    required this.errorCode,
-    required this.errorType,
+    this.errorCode,
+    this.errorType,
     this.errorSubType,
-    required this.errorDescription,
-    required this.stackTrace,
+    this.errorDescription,
+    this.stackTrace,
     this.errorMessage,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'errorCode': errorCode,
-      'errorType': errorType.value,
+      'errorType': errorType?.value,
       'errorSubType': errorSubType,
       'errorDescription': errorDescription,
       'errorMessage': errorMessage,
@@ -29,13 +29,12 @@ class Error {
 
   factory Error.fromMap(Map<String, dynamic> map) {
     return Error(
-      errorCode: map['errorCode'] as String,
+      errorCode: map['errorCode'] as String?,
       errorType: ErrorType.values.byName(map['errorType']),
-      errorMessage: map['errorMessage'],
-      errorSubType:
-          map['errorSubType'] != null ? map['errorSubType'] as String : null,
-      errorDescription: map['errorDescription'] as String,
-      stackTrace: map['stackTrace'] as String,
+      errorMessage: map['errorMessage'] as String?,
+      errorSubType: map['errorSubType'] as String?,
+      errorDescription: map['errorDescription'] as String?,
+      stackTrace: map['stackTrace'] as String?,
     );
   }
 
@@ -46,7 +45,7 @@ class Error {
 
   @override
   String toString() {
-    return 'Error(errorCode: $errorCode, errorType: $errorType, errorSubType: $errorSubType, errorDescription: $errorDescription, stackTrace: $stackTrace)';
+    return 'Error(errorCode: $errorCode, errorType: $errorType, errorSubType: $errorSubType, errorDescription: $errorDescription, errorMessage: $errorMessage stackTrace: $stackTrace)';
   }
 }
 
@@ -59,4 +58,24 @@ enum ErrorType {
 
   const ErrorType(this.value);
   final String value;
+}
+
+class NetworkConnectionError extends Error {
+  NetworkConnectionError();
+}
+
+class InternalServerError extends Error {
+  InternalServerError();
+}
+
+class UnauthorizedError extends Error {
+  UnauthorizedError();
+}
+
+class ForbidError extends Error {
+  ForbidError();
+}
+
+class NotFoundError extends Error {
+  NotFoundError();
 }
