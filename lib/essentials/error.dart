@@ -30,7 +30,9 @@ class Error {
   factory Error.fromMap(Map<String, dynamic> map) {
     return Error(
       errorCode: map['errorCode'] as String?,
-      errorType: ErrorType.values.byName(map['errorType']),
+      errorType: map['errorType'] != null
+          ? ErrorType.values.byName(map['errorType'])
+          : null,
       errorMessage: map['errorMessage'] as String?,
       errorSubType: map['errorSubType'] as String?,
       errorDescription: map['errorDescription'] as String?,
