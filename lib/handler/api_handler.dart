@@ -127,6 +127,7 @@ class ApiHandler {
 
   Result<T> failureFromResponse<T>(http.Response response) {
     if (response.statusCode == 400) {
+      return Result.failure(Error.fromMap(jsonDecode(response.body)));
     } else if (response.statusCode == 401) {
       return Result.failure(UnauthorizedError());
     } else if (response.statusCode == 403) {
@@ -136,6 +137,5 @@ class ApiHandler {
     } else {
       return Result.failure(InternalServerError());
     }
-    return Result.failure(NotFoundError());
   }
 }
