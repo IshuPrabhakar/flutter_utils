@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of utils;
 
 const shimmerGradient = LinearGradient(
   colors: [
