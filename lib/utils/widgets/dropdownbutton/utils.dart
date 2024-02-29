@@ -10,19 +10,9 @@ part of 'dropdown_button2.dart';
 /// floating point numbers.
 //
 // See also: //dev/benchmarks/microbenchmarks/lib/foundation/clamp.dart
-// TODO(Ahmed): use clampDouble from Flutter [flutter>=v3.3.0].
 double _clampDouble(double x, double min, double max) {
   assert(min <= max && !max.isNaN && !min.isNaN);
-  if (x < min) {
-    return min;
-  }
-  if (x > max) {
-    return max;
-  }
-  if (x.isNaN) {
-    return max;
-  }
-  return x;
+  return clampDouble(x, min, max);
 }
 
 /// Adds separators to a list of heights.

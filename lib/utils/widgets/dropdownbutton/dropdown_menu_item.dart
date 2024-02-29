@@ -92,7 +92,6 @@ class _DropdownItemButtonState<T> extends State<_DropdownItemButton<T>> {
     switch (FocusManager.instance.highlightMode) {
       case FocusHighlightMode.touch:
         inTraditionalMode = false;
-        // TODO(Ahmed): Remove decorative breaks and add lint to it [flutter>=v3.10.0].
         break;
       case FocusHighlightMode.traditional:
         inTraditionalMode = true;

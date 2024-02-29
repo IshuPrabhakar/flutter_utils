@@ -606,14 +606,9 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
       widget.onChanged != null;
 
   Orientation _getOrientation(BuildContext context) {
-    // TODO(Ahmed): use maybeOrientationOf [flutter>=v3.10.0].
-    Orientation? result = MediaQuery.maybeOf(context)?.orientation;
+    Orientation? result = MediaQuery.maybeOrientationOf(context);
     if (result == null) {
-      // If there's no MediaQuery, then use the window aspect to determine
-      // orientation.
-      // TODO(Ahmed): use View.of(context) and update the comment [flutter>=v3.10.0].
-      // ignore: deprecated_member_use
-      final Size size = WidgetsBinding.instance.window.physicalSize;
+      final Size size = View.of(context).physicalSize;
       result = size.width > size.height
           ? Orientation.landscape
           : Orientation.portrait;
