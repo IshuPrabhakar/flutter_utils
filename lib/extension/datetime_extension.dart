@@ -22,11 +22,11 @@ extension DateHelper on DateTime {
 
   /// Returns a string formatted date
   ///  Example: 5:08 PM
-  String get time12Hrs => DateFormat.jm().toString();
+  String get time12Hrs => DateFormat.jm(this).toString();
 
   /// Returns a string formatted date
   ///  Example: 15:08 PM
-  String get time24Hrs => DateFormat.Hm().toString();
+  String get time24Hrs => DateFormat.Hm(this).toString();
 
   String get defaultDateTimeFormat {
     DateTime today = DateTime.now();

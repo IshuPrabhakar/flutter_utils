@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:flutter/foundation.dart';
 export 'package:animations/animations.dart';
+export './widgets/dropdown_button2.dart';
 
 part './animations/navigator_animations.dart';
 part './enum/border_radius.dart';
