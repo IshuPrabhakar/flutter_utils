@@ -12,3 +12,4 @@ part './animations/navigator_animations.dart';
 part './enum/border_radius.dart';
 part './widgets/animated_button.dart';
 part 'widgets/shimmer.dart';
+part 'widgets/persistent_sliding_panel.dart';

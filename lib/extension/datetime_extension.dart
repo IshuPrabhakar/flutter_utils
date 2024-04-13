@@ -25,10 +25,12 @@ extension DateHelper on DateTime {
   String get time12Hrs => DateFormat.jm(this).toString();
 
   /// Returns a string formatted date
-  ///  Example: 15:08 PM
+  /// Example: 15:08 PM
   String get time24Hrs => DateFormat.Hm(this).toString();
 
-  String get defaultDateTimeFormat {
+  /// Returns a string formatted date
+  /// Example: 5:08 PM Monday, 15 September 2023
+  String get defaultFormat {
     DateTime today = DateTime.now();
     Duration oneDay = const Duration(days: 1);
     Duration twoDay = const Duration(days: 2);
