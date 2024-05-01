@@ -8,7 +8,7 @@ class NetworkHandler {
       if (result.statusCode == 200) {
         return Future.value(true);
       } else {}
-    } on SocketException catch (_) {
+    } catch (_) {
       return Future.value(false);
     }
     return Future.value(false);
@@ -21,13 +21,13 @@ class NetworkHandler {
       if (result.statusCode == 200) {
         return Future.value(true);
       }
-    } on SocketException catch (_) {
+    } catch (_) {
       return Future.value(false);
     }
     return Future.value(false);
   }
 
-    Stream<ConnectivityResult> get connectivityStream async* {
+  Stream<ConnectivityResult> get connectivityStream async* {
     final c = Connectivity();
     yield await c.checkConnectivity();
     yield* c.onConnectivityChanged;

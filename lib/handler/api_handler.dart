@@ -38,7 +38,7 @@ class ApiHandler {
             ? Result.failure(error)
             : failureFromResponse<T>(response);
       }
-    } on SocketException {
+    } catch (e) {
       return Result.failure(NetworkConnectionError());
     }
   }
@@ -66,7 +66,7 @@ class ApiHandler {
             ? Result.failure(error)
             : failureFromResponse<T>(response);
       }
-    } on SocketException {
+    } catch (e) {
       return Result.failure(NetworkConnectionError());
     }
   }
@@ -93,7 +93,7 @@ class ApiHandler {
             ? Result.failure(error)
             : failureFromResponse<T>(response);
       }
-    } on SocketException {
+    } catch (e) {
       return Result.failure(NetworkConnectionError());
     }
   }
@@ -111,7 +111,7 @@ class ApiHandler {
       } else {
         return Result.failure(NetworkConnectionError());
       }
-    } on SocketException {
+    } catch (e) {
       return Result.failure(NetworkConnectionError());
     }
   }

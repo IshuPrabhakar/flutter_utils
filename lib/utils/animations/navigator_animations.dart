@@ -7,7 +7,8 @@ class OpenContainerAnimationNavigator extends StatelessWidget {
     required this.navigateFrom,
     required this.animationDuration,
     required this.transitionType,
-    this.onTap, this.onNavigateTap,
+    this.onTap,
+    this.onNavigateTap,
   });
 
   final Widget navigateTo;
@@ -30,12 +31,12 @@ class OpenContainerAnimationNavigator extends StatelessWidget {
       openBuilder:
           (BuildContext context, void Function({Object? returnValue}) action) =>
               navigateTo,
-      closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
+      closedBuilder: (context, openContainer) => GestureDetector(
         onTap: () {
-          if (onNavigateTap != null){
+          if (onNavigateTap != null) {
             onNavigateTap?.call(openContainer);
           } else {
-          openContainer.call();
+            openContainer.call();
           }
           onTap?.call();
         },

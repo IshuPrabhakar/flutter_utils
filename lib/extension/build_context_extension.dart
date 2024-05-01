@@ -19,4 +19,7 @@ extension ContextHepler on BuildContext {
 
   void navigateBack<T extends Object?>([T? result]) =>
       Navigator.of(this).pop(result);
+
+  // Text styles
+  TextTheme get textStyle => Theme.of(this).textTheme;
 }
