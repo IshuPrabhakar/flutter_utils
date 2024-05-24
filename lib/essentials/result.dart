@@ -1,6 +1,6 @@
 part of handler;
 
-class Result<T> {
+class Response<T> {
   late bool _isSuccess;
   bool get isSuccess => _isSuccess;
   bool get isFailure => !_isSuccess;
@@ -11,11 +11,11 @@ class Result<T> {
   T? _value;
   T? get value => _value;
 
-  Result.failure(this._error) {
+  Response.failure(this._error) {
     _isSuccess = false;
   }
 
-  Result.success([T? value]) {
+  Response.success([T? value]) {
     _value = value;
     _isSuccess = true;
   }

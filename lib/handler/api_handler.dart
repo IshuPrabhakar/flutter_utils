@@ -22,7 +22,7 @@ class ApiHandler {
     _headers[HttpHeaders.acceptLanguageHeader] = locale.toLanguageTag();
   }
 
-  Future<Result<T>> get<T>({
+  Future<Response<T>> get<T>({
     required String url,
     required T Function(http.Response response)? onSuccess,
     Error? Function(http.Response response)? onError,
@@ -31,19 +31,19 @@ class ApiHandler {
       var response = await http.get(Uri.parse(url), headers: _headers);
       _updateCookie(response);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Result.success(onSuccess!(response));
+        return Response.success(onSuccess!(response));
       } else {
         var error = onError == null ? null : onError(response);
         return error != null
-            ? Result.failure(error)
+            ? Response.failure(error)
             : failureFromResponse<T>(response);
       }
     } catch (e) {
-      return Result.failure(NetworkConnectionError());
+      return Response.failure(NetworkConnectionError());
     }
   }
 
-  Future<Result<T>> post<T, M>({
+  Future<Response<T>> post<T, M>({
     required String url,
     M? model,
     String? stringifiedJson,
@@ -59,21 +59,22 @@ class ApiHandler {
       );
       _updateCookie(response);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Result.success(onSuccess!(response));
+        return Response.success(onSuccess!(response));
       } else {
         var error = onError == null ? null : onError(response);
         return error != null
-            ? Result.failure(error)
+            ? Response.failure(error)
             : failureFromResponse<T>(response);
       }
     } catch (e) {
-      return Result.failure(NetworkConnectionError());
+      return Response.failure(NetworkConnectionError());
     }
   }
 
-  Future<Result<T>> put<T, M>({
+  Future<Response<T>> put<T, M>({
     required String url,
     M? model,
+    String? stringifiedJson,
     required T Function(http.Response response)? onSuccess,
     Error? Function(http.Response response)? onError,
     String? sessionToken,
@@ -82,23 +83,23 @@ class ApiHandler {
       var response = await http.put(
         Uri.parse(url),
         headers: _headers,
-        body: model != null ? json.encode(model) : null,
+        body: model != null ? json.encode(model) : stringifiedJson,
       );
       _updateCookie(response);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Result.success(onSuccess!(response));
+        return Response.success(onSuccess!(response));
       } else {
         var error = onError == null ? null : onError(response);
         return error != null
-            ? Result.failure(error)
+            ? Response.failure(error)
             : failureFromResponse<T>(response);
       }
     } catch (e) {
-      return Result.failure(NetworkConnectionError());
+      return Response.failure(NetworkConnectionError());
     }
   }
 
-  Future<Result<T>> delete<T>({
+  Future<Response<T>> delete<T>({
     required String url,
     required T Function(http.Response response)? onSuccess,
     Error? Function(http.Response response)? onError,
@@ -107,12 +108,12 @@ class ApiHandler {
       var response = await http.delete(Uri.parse(url), headers: _headers);
       _updateCookie(response);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Result.success(onSuccess!(response));
+        return Response.success(onSuccess!(response));
       } else {
-        return Result.failure(NetworkConnectionError());
+        return Response.failure(NetworkConnectionError());
       }
     } catch (e) {
-      return Result.failure(NetworkConnectionError());
+      return Response.failure(NetworkConnectionError());
     }
   }
 
@@ -125,17 +126,17 @@ class ApiHandler {
     }
   }
 
-  Result<T> failureFromResponse<T>(http.Response response) {
+  Response<T> failureFromResponse<T>(http.Response response) {
     if (response.statusCode == 400) {
-      return Result.failure(Error.fromMap(jsonDecode(response.body)));
+      return Response.failure(Error.fromMap(jsonDecode(response.body)));
     } else if (response.statusCode == 401) {
-      return Result.failure(UnauthorizedError());
+      return Response.failure(UnauthorizedError());
     } else if (response.statusCode == 403) {
-      return Result.failure(ForbidError());
+      return Response.failure(ForbidError());
     } else if (response.statusCode == 404) {
-      return Result.failure(NotFoundError());
+      return Response.failure(NotFoundError());
     } else {
-      return Result.failure(InternalServerError());
+      return Response.failure(InternalServerError());
     }
   }
 }
