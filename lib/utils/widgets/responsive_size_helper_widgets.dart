@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../helper/responsive_size_helper.dart';
+part of utils;
 
 /// Provides `Context`, `Orientation`, and `ScreenType` parameters to the builder function
 typedef ResponsiveBuilderType = Widget Function(
