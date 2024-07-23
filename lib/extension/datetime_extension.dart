@@ -1,6 +1,6 @@
 part of extension;
 
-extension DateHelper on DateTime {
+extension DateEx on DateTime {
   /// Returns true if it is today
   bool get isToday {
     final now = DateTime.now();
@@ -22,11 +22,11 @@ extension DateHelper on DateTime {
 
   /// Returns a string formatted date
   ///  Example: 5:08 PM
-  String get time12Hrs => DateFormat.jm(this).toString();
+  String get time12 => DateFormat.jm(this).toString();
 
   /// Returns a string formatted date
   /// Example: 15:08 PM
-  String get time24Hrs => DateFormat.Hm(this).toString();
+  String get time24 => DateFormat.Hm(this).toString();
 
   /// Returns a string formatted date
   /// Example: 5:08 PM Monday, 15 September 2023
