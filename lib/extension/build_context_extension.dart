@@ -22,4 +22,6 @@ extension ContextHepler on BuildContext {
 
   // Text styles
   TextTheme get textStyle => Theme.of(this).textTheme;
+
+  ThemeData get theme => Theme.of(this);
 }
