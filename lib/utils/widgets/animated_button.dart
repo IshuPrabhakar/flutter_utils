@@ -26,6 +26,7 @@ class AnimatedButton extends StatefulWidget {
     this.splashColor,
     this.borderColor,
     this.isDisabled = false,
+    this.decoration,
   });
 
   final BorderRadiusType? borderRadiusType;
@@ -38,6 +39,7 @@ class AnimatedButton extends StatefulWidget {
   final Widget? child;
   final bool? canExpand;
   final Color? splashColor;
+  final Decoration? decoration;
 
   @override
   State<AnimatedButton> createState() => _AnimatedButtonState();
@@ -102,13 +104,15 @@ class _AnimatedButtonState extends State<AnimatedButton>
         child: AnimatedContainer(
           height: widget.canExpand == true ? null : widget.height ?? 50,
           width: widget.canExpand == true ? null : widget.width ?? 55,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(widget.borderRadiusType!.value),
-            ),
-            color: widget.color ?? Colors.white,
-            border: Border.all(color: widget.borderColor ?? Colors.transparent),
-          ),
+          decoration: widget.decoration ??
+              BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(widget.borderRadiusType!.value),
+                ),
+                color: widget.color ?? Colors.white,
+                border:
+                    Border.all(color: widget.borderColor ?? Colors.transparent),
+              ),
           duration: const Duration(milliseconds: 300),
           child: Center(child: widget.child),
         ),
