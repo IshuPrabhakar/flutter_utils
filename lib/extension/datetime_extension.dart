@@ -33,75 +33,59 @@ extension DateEx on DateTime {
   String get defaultFormat {
     DateTime today = DateTime.now();
     Duration oneDay = const Duration(days: 1);
-    Duration twoDay = const Duration(days: 2);
     Duration oneWeek = const Duration(days: 7);
-    late String month;
 
-    switch (this.month) {
-      case 1:
-        month = "January";
-        break;
-      case 2:
-        month = "February";
-        break;
-      case 3:
-        month = "March";
-        break;
-      case 4:
-        month = "April";
-        break;
-      case 5:
-        month = "May";
-        break;
-      case 6:
-        month = "June";
-        break;
-      case 7:
-        month = "July";
-        break;
-      case 8:
-        month = "August";
-        break;
-      case 9:
-        month = "September";
-        break;
-      case 10:
-        month = "October";
-        break;
-      case 11:
-        month = "November";
-        break;
-      case 12:
-        month = "December";
-        break;
-    }
+    // Mapping month number to month name using a list for simplicity
+    const List<String> months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    // Get month name from the list
+    String month = months[this.month - 1];
 
     Duration difference = today.difference(this);
     var formattedTime = DateFormat.jm().format(this);
-    if (difference.compareTo(oneDay) < 1) {
+
+    // Check if the date is today
+    if (difference.inDays == 0 && today.day == day) {
       return "$formattedTime, Today";
-    } else if (difference.compareTo(twoDay) < 1) {
+    }
+    // Check if the date is yesterday
+    else if (difference.compareTo(oneDay) < 1 && isBefore(today)) {
       return "$formattedTime, Yesterday";
-    } else if (difference.compareTo(oneWeek) < 1) {
-      switch (weekday) {
-        case 1:
-          return "$formattedTime, Monday";
-        case 2:
-          return "$formattedTime, Tuesday";
-        case 3:
-          return "$formattedTime, Wednesday";
-        case 4:
-          return "$formattedTime, Thursday";
-        case 5:
-          return "$formattedTime, Friday";
-        case 6:
-          return "$formattedTime, Saturday";
-        default:
-          return "$formattedTime, Sunday";
-      }
-    } else if (year == today.year) {
+    }
+    // Check if the date is within the past week
+    else if (difference.compareTo(oneWeek) < 1) {
+      const List<String> weekdays = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ];
+      // Get weekday name
+      String weekdayName = weekdays[weekday % 7];
+      return "$formattedTime, $weekdayName";
+    }
+    // Check if the date is within the current year
+    else if (year == today.year) {
       return '$day $month $year';
-    } else {
+    }
+    // If the date is in another year
+    else {
       return '$day $month $year';
     }
   }
