@@ -22,6 +22,10 @@ class ApiHandler {
     _headers[HttpHeaders.acceptLanguageHeader] = locale.toLanguageTag();
   }
 
+  void addCustomHeaders(Map<String, String> headers) {
+    _headers.addAll(headers);
+  }
+
   Future<Response<T>> get<T>({
     required String url,
     required T Function(http.Response response)? onSuccess,
