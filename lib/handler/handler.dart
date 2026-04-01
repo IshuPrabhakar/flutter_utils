@@ -17,4 +17,3 @@ export 'package:connectivity_plus/connectivity_plus.dart';
 part 'file_handler.dart';
 part 'network_handler.dart';
 part 'api_handler.dart';
-part '../essentials/result.dart';
