@@ -59,6 +59,11 @@ class PageTransitionSwitcherNavigatorAnimation extends StatelessWidget {
         transitionType: transitionType,
         child: child,
       ),
+      layoutBuilder: (entries) {
+        return Stack(
+          children: entries,
+        );
+      },
       child: _pages,
     );
   }
