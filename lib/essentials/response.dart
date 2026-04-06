@@ -21,11 +21,11 @@ class Response<T> {
         _value = null;
 
   R when<R>({
-    required R Function(T value) success,
+    required R Function(T? value) success,
     required R Function(Error error) failure,
   }) {
-    if (_isSuccess && _value != null) {
-      return success(_value as T);
+    if (_isSuccess) {
+      return success(_value);
     } else {
       return failure(_error ?? Error(errorMessage: 'Unknown error'));
     }
